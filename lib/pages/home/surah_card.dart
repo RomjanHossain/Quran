@@ -71,11 +71,14 @@ class SurahCard extends StatelessWidget {
 
             Column(
               children: [
-                Text(
-                  surah.nameEn,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                Hero(
+                  tag: surah.nameEn,
+                  child: Text(
+                    surah.nameEn,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Row(
