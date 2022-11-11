@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quran/model/surah_model/surah_model.dart';
 import 'package:quran/pages/surah/surah.dart';
 import 'package:quran/widgets/const.dart';
 
@@ -10,7 +11,7 @@ class SurahCard extends StatelessWidget {
   });
 
   final int index;
-  final Map<String, String>? surah;
+  final SurahModel surah;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -22,7 +23,10 @@ class SurahCard extends StatelessWidget {
               Animation<double> animation,
               _,
             ) =>
-                SurahRead(),
+                SurahRead(
+              surah: surah,
+              ind: index,
+            ),
             transitionsBuilder: (
               BuildContext context,
               Animation<double> animation,
@@ -68,7 +72,7 @@ class SurahCard extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  surah!['name_en'].toString(),
+                  surah.nameEn,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -79,14 +83,14 @@ class SurahCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      getType(surah!['type'].toString().replaceAll(' ', '')),
+                      getType(surah.revelationType.replaceAll(' ', '')),
                       style: const TextStyle(
                         fontSize: 16,
                         // fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      surah!['ayahs'].toString(),
+                      surah.ayahs,
                       style: const TextStyle(
                         fontSize: 16,
                         // fontWeight: FontWeight.bold,
@@ -98,7 +102,7 @@ class SurahCard extends StatelessWidget {
             ),
             //? Surah Name ar
             Text(
-              surah!['name_ar'].toString(),
+              surah.nameAr,
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

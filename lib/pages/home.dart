@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:quran/model/details/surah.dart';
+import 'package:quran/model/surah_model/surah_model.dart';
 import 'package:quran/pages/home/surah_card.dart';
 import 'package:quran/widgets/cardlistanimation.dart';
-import 'package:quran/widgets/const.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({
@@ -13,7 +12,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SurahListView(),
     );
   }
@@ -43,7 +42,8 @@ class _SurahListViewState extends State<SurahListView> {
       child: ListView.builder(
         itemCount: surahs.length,
         itemBuilder: (BuildContext context, int index) {
-          Map<String, String>? surah = surahs["${index + 1}"];
+          // Map<String, String>? surah = surahs["${index + 1}"];
+          SurahModel surah = SurahModel.fromJson(surahs["${index + 1}"]!);
 
           return ValueListenableBuilder<ScrollDirection>(
             valueListenable: scrollDirectionNotifier,
