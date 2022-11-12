@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quran/model/surah_model/surah_model.dart';
-import 'package:quran/pages/surah/surah.dart';
-import 'package:quran/widgets/const.dart';
+
+import '../../model/surah_model/surah_model.dart';
+import '../../widgets/const.dart';
+import '../surah/surah.dart';
 
 class SurahCard extends StatelessWidget {
   const SurahCard({
@@ -70,7 +71,7 @@ class SurahCard extends StatelessWidget {
             ),
 
             Column(
-              children: [
+              children: <Widget>[
                 Hero(
                   tag: surah.nameEn,
                   child: Text(
@@ -83,8 +84,7 @@ class SurahCard extends StatelessWidget {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     Text(
                       getType(surah.revelationType.replaceAll(' ', '')),
                       style: const TextStyle(

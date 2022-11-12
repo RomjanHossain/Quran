@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:quran/model/from_web/real_model.dart';
-import 'package:quran/model/surah_model/surah_model.dart';
-import 'package:quran/pages/home/widget/right_drawer.dart';
-import 'package:quran/pages/surah/widget/small_div.dart';
-import 'package:quran/services/theme/theme_.dart';
-import 'package:quran/widgets/const.dart';
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:provider/provider.dart';
+
+import '../../model/from_web/real_model.dart';
+import '../../model/surah_model/surah_model.dart';
+import '../../services/theme/theme_.dart';
+import '../../widgets/const.dart';
+import '../home/widget/right_drawer.dart';
+import 'widget/small_div.dart';
 
 class SurahRead extends StatelessWidget {
   SurahRead({
@@ -48,19 +50,21 @@ class SurahRead extends StatelessWidget {
           ),
         ],
       ),
-      body: FutureBuilder(
+      body: FutureBuilder<String>(
         future: rootBundle.loadString('assets/surahs/quran_$ind.json'),
-        builder: (context, AsyncSnapshot<String> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.hasData) {
-            List<RealSurahModel> allAyahs =
+            final List<RealSurahModel> allAyahs =
                 (jsonDecode(snapshot.data!) as List<dynamic>)
-                    .map((e) => RealSurahModel.fromJson(e))
+                    .map((dynamic e) =>
+                        RealSurahModel.fromJson(e as Map<String, dynamic>))
                     .toList();
             return ListView.builder(
               physics: const BouncingScrollPhysics(),
               itemCount: allAyahs.length,
               itemBuilder: (BuildContext context, int index) {
-                Translations translation = allAyahs[index].translations![1];
+                final Translations translation =
+                    allAyahs[index].translations![1];
                 // print('lets print the texts -> ');
 
                 if (index == 0) {
@@ -71,15 +75,15 @@ class SurahRead extends StatelessWidget {
                       vertical: 20,
                     ),
                     decoration: BoxDecoration(
-                      // color: kcolor2,
+                      color: kcolor2,
                       borderRadius: BorderRadius.circular(10),
-                      boxShadow: const <BoxShadow>[
-                        BoxShadow(
-                          color: Colors.indigo,
-                          blurRadius: 10,
-                          offset: Offset(0, 0),
-                        ),
-                      ],
+                      // boxShadow: const <BoxShadow>[
+                      //   BoxShadow(
+                      //     color: Colors.indigo,
+                      //     blurRadius: 10,
+                      //     offset: Offset(0, 0),
+                      //   ),
+                      // ],
                     ),
                     // height: 100,
                     // color: Colors.red,
@@ -108,8 +112,7 @@ class SurahRead extends StatelessWidget {
                         // row [type of surah, number of ayahs]
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
+                          children: <Widget>[
                             Text(
                               getType(surah.revelationType.replaceAll(' ', '')),
                               style: const TextStyle(
@@ -148,7 +151,7 @@ class SurahRead extends StatelessWidget {
                   child: Column(
                     // mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
+                    children: <Widget>[
                       Text(
                         allAyahs[index].textUthmani.toString(),
                         textAlign: TextAlign.right,
@@ -158,7 +161,7 @@ class SurahRead extends StatelessWidget {
                         ),
                       ),
                       RichText(
-                          text: TextSpan(children: [
+                          text: TextSpan(children: <TextSpan>[
                         TextSpan(
                           text: translation.text != null
                               ? removeAllHtmlTags(translation.text!)

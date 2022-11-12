@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:quran/services/theme/theme_pref.dart';
+import 'theme_pref.dart';
 
 class ModelTheme extends ChangeNotifier {
-  late bool _isDark;
-  late MyThemePreferences _preferences;
-  bool get isDark => _isDark;
-
   ModelTheme() {
     _isDark = false;
     _preferences = MyThemePreferences();
     getPreferences();
   }
-//Switching the themes
+  late bool _isDark;
+  late MyThemePreferences _preferences;
+  bool get isDark => _isDark;
+  //Switching the themes
   set isDark(bool value) {
     _isDark = value;
     _preferences.setTheme(value);
     notifyListeners();
   }
 
-  getPreferences() async {
+  Future<void> getPreferences() async {
     _isDark = await _preferences.getTheme();
     notifyListeners();
   }

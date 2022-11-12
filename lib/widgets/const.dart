@@ -17,7 +17,7 @@ String getType(String type) {
 
 /// remove html tags from string
 String removeAllHtmlTags(String htmlText) {
-  RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+  final RegExp exp = RegExp(r'<[^>]*>', multiLine: true);
 
   return htmlText.replaceAll(exp, '');
 }

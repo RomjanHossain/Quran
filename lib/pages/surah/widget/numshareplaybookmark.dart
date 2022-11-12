@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:quran/widgets/const.dart';
+import '../../../widgets/const.dart';
 
 class NumSharePlayBookMarkCard extends StatelessWidget {
   const NumSharePlayBookMarkCard({
-    Key? key,
+    super.key,
     required this.index,
-  }) : super(key: key);
+  });
 
   final int index;
 
@@ -21,7 +21,7 @@ class NumSharePlayBookMarkCard extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: <Widget>[
           Container(
             width: 35,
             // height: 35,
@@ -39,7 +39,7 @@ class NumSharePlayBookMarkCard extends StatelessWidget {
             ),
           ),
           Row(
-            children: [
+            children: <Widget>[
               IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
               IconButton(onPressed: () {}, icon: const Icon(Icons.play_arrow)),
               IconButton(onPressed: () {}, icon: const Icon(Icons.bookmark)),

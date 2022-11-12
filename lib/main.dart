@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quran/pages/home.dart';
-import 'package:quran/services/theme/theme_.dart';
+import 'pages/home.dart';
+import 'services/theme/theme_.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,10 +12,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ModelTheme(),
-      child: Consumer<ModelTheme>(
-          builder: (context, ModelTheme themeNotifier, child) {
+    return MultiProvider(
+      // ignore: always_specify_types
+      providers: [
+        ChangeNotifierProvider<ModelTheme>(
+            create: (BuildContext context) => ModelTheme()),
+      ],
+      // create: (BuildContext context) => ModelTheme(),
+      child: Consumer<ModelTheme>(builder:
+          (BuildContext context, ModelTheme themeNotifier, Widget? child) {
         return MaterialApp(
           title: 'Quran Majeed',
           theme: themeNotifier.isDark
