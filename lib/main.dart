@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'pages/home.dart';
+import 'services/provider/font_size_provider.dart';
+import 'services/provider/trans_provider.dart';
 import 'services/theme/theme_.dart';
 
 void main() {
@@ -17,6 +19,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<ModelTheme>(
             create: (BuildContext context) => ModelTheme()),
+        ChangeNotifierProvider<TransValProvider>(
+            create: (BuildContext context) => TransValProvider()),
+        ChangeNotifierProvider<FontSizeProvider>(
+            create: (BuildContext context) => FontSizeProvider()),
       ],
       // create: (BuildContext context) => ModelTheme(),
       child: Consumer<ModelTheme>(builder:

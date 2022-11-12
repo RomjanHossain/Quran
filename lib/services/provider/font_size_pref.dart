@@ -3,15 +3,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MyFontSizePreferences {
   static const String FONT_SIZE_KEY = 'font_size_key';
 
-  Future<void> setFontSize(int value) async {
+  Future<void> setFontSize(double value) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    sharedPreferences.setInt(FONT_SIZE_KEY, value);
+    sharedPreferences.setDouble(FONT_SIZE_KEY, value);
   }
 
-  Future<int> getFontSize() async {
+  Future<double> getFontSize() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    return sharedPreferences.getInt(FONT_SIZE_KEY) ?? 40;
+    return sharedPreferences.getDouble(FONT_SIZE_KEY) ?? 40;
   }
 }

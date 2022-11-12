@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../model/translations/lan_and_code.dart';
+import '../../../model/translations/translations.dart';
+import '../components/lang_drawer_listview.dart';
+import 'fontsize_slider.dart';
 
 class MyRightDrawer extends StatelessWidget {
   const MyRightDrawer({
@@ -12,18 +15,31 @@ class MyRightDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           // a button to close the drawer
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(Icons.close),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              const Text('Configurations'),
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(Icons.close),
+              ),
+            ],
           ),
+
+          //! arabic font size slider
+          const Text('Arabic Font Size'),
+          const FontSizeSlider(),
+          // switch between arabic font family (uthmani/imlaei)
+
           // show languageAndCode map as a list of buttons
           ...languageAndCode.keys.map(
-            (String key) => Text(
-              key,
-              style: const TextStyle(fontSize: 20),
-            ),
+            (String key) {
+              return AllLangDrawerListView(
+                key2: key,
+              );
+            },
           ),
         ],
       ),

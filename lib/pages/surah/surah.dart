@@ -6,6 +6,9 @@ import 'package:provider/provider.dart';
 
 import '../../model/from_web/real_model.dart';
 import '../../model/surah_model/surah_model.dart';
+import '../../model/translations/lan_and_code.dart';
+import '../../model/translations/translations.dart';
+import '../../services/provider/font_size_provider.dart';
 import '../../services/theme/theme_.dart';
 import '../../widgets/const.dart';
 import '../home/widget/right_drawer.dart';
@@ -43,7 +46,6 @@ class SurahRead extends StatelessWidget {
           // button to open the drawer
           IconButton(
             onPressed: () {
-              // Scaffold.of(context).openEndDrawer();
               _scaffoldKey.currentState!.openEndDrawer();
             },
             icon: const Icon(Icons.menu),
@@ -65,9 +67,13 @@ class SurahRead extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 final Translations translation =
                     allAyahs[index].translations![1];
+                final Iterable<Translations> translationLang = allAyahs[index]
+                    .translations!
+                    .where((Translations element) => element.resourceId == 162);
                 // print('lets print the texts -> ');
-
+                // print(translationLang.elementAt(index).text);
                 if (index == 0) {
+                  print(translationLang.length);
                   return Container(
                     padding: const EdgeInsets.all(20),
                     margin: const EdgeInsets.symmetric(
@@ -152,19 +158,36 @@ class SurahRead extends StatelessWidget {
                     // mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
-                      Text(
-                        allAyahs[index].textUthmani.toString(),
-                        textAlign: TextAlign.right,
-                        style: const TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Consumer<FontSizeProvider>(
+                        builder: (BuildContext context, FontSizeProvider value,
+                            Widget? child) {
+                          return Text(
+                            allAyahs[index].textUthmani.toString(),
+                            style: TextStyle(
+                              fontSize: value.fontSize,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        },
+                        // child: Text(
+                        //   allAyahs[index].textUthmani.toString(),
+                        //   textAlign: TextAlign.right,
+                        //   style: TextStyle(
+                        //     // fontSize: Provider.of<FontSizeProvider>(context,
+                        //     //         listen: false)
+                        //     //     .fontSize,
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
                       ),
                       RichText(
                           text: TextSpan(children: <TextSpan>[
                         TextSpan(
-                          text: translation.text != null
-                              ? removeAllHtmlTags(translation.text!)
+                          // text: translation.text != null
+                          //     ? removeAllHtmlTags(translation.text!)
+                          //     : '',
+                          text: translationLang.first.text != null
+                              ? removeAllHtmlTags(translationLang.first.text!)
                               : '',
                           style: const TextStyle(
                             fontSize: 20, color: Colors.black,
