@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../model/translations/lan_and_code.dart';
 import '../../../model/translations/translations.dart';
+import '../../../services/provider/translate/trans_provider.dart';
 
-class AllLangDrawerListView extends StatelessWidget {
-  const AllLangDrawerListView({
+class TransListInDrawer extends StatelessWidget {
+  const TransListInDrawer({
     super.key,
     required this.key2,
   });
+
   final String key2;
 
   @override
@@ -28,9 +31,15 @@ class AllLangDrawerListView extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 onTap: () {
-                  print(
-                    "${transShit.where((Map<String, Object> element) => element['languageId'] == languageAndCode[key]).elementAt(index)['resourceId']}",
-                  );
+                  Provider.of<TransValProvider>(context, listen: false)
+                      .addTransList(transShit
+                          .where((Map<String, Object> element) =>
+                              element['languageId'] == languageAndCode[key2])
+                          .elementAt(index)['resourceId']
+                          .toString());
+                  // print(
+                  //   "${transShit.where((Map<String, Object> element) => element['languageId'] == languageAndCode[key2]).elementAt(index)['resourceId']}",
+                  // );
                 },
                 child: Container(
                   // width: 100,
@@ -44,14 +53,14 @@ class AllLangDrawerListView extends StatelessWidget {
                         ),
                   ),
                   child: Text(
-                    "${transShit.where((Map<String, Object> element) => element['languageId'] == languageAndCode[key]).elementAt(index)['resourceName']}",
+                    "${transShit.where((Map<String, Object> element) => element['languageId'] == languageAndCode[key2]).elementAt(index)['resourceName']}",
                   ),
                 ),
               );
             },
             itemCount: transShit
                 .where((Map<String, Object> element) =>
-                    element['languageId'] == languageAndCode[key])
+                    element['languageId'] == languageAndCode[key2])
                 .length,
             // shrinkWrap: true,
             scrollDirection: Axis.horizontal,

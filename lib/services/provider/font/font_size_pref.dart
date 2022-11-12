@@ -15,3 +15,19 @@ class MyFontSizePreferences {
     return sharedPreferences.getDouble(FONT_SIZE_KEY) ?? 40;
   }
 }
+
+class MyFontFamilyPreferences {
+  static const String FONT_FAMILY = 'font_family';
+
+  Future<void> setFontSize(String value) async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    sharedPreferences.setString(FONT_FAMILY, value);
+  }
+
+  Future<String> getFontSize() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    return sharedPreferences.getString(FONT_FAMILY) ?? '';
+  }
+}

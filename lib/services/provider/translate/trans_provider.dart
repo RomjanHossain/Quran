@@ -12,9 +12,15 @@ class TransValProvider extends ChangeNotifier {
   List<String> get transList => _transList;
 
   // setting font size value
-  set transList(List<String> value) {
-    _transList = value;
-    _preferences.setTransVal(value);
+  // set transList(List<String> value) {
+  //   _transList = value;
+  //   _preferences.setTransVal(value);
+  //   notifyListeners();
+  // }
+  // add a value to transList
+  void addTransList(String value) {
+    _transList.add(value);
+    _preferences.setTransVal(_transList);
     notifyListeners();
   }
 

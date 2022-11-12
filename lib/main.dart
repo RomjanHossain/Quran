@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'pages/home.dart';
-import 'services/provider/font_size_provider.dart';
-import 'services/provider/trans_provider.dart';
+import 'services/provider/font/font_size_provider.dart';
+import 'services/provider/translate/trans_provider.dart';
 import 'services/theme/theme_.dart';
 
 void main() {

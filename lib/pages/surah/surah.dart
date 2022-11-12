@@ -8,7 +8,8 @@ import '../../model/from_web/real_model.dart';
 import '../../model/surah_model/surah_model.dart';
 import '../../model/translations/lan_and_code.dart';
 import '../../model/translations/translations.dart';
-import '../../services/provider/font_size_provider.dart';
+import '../../services/provider/font/font_size_provider.dart';
+import '../../services/provider/translate/trans_provider.dart';
 import '../../services/theme/theme_.dart';
 import '../../widgets/const.dart';
 import '../home/widget/right_drawer.dart';
@@ -70,6 +71,12 @@ class SurahRead extends StatelessWidget {
                 final Iterable<Translations> translationLang = allAyahs[index]
                     .translations!
                     .where((Translations element) => element.resourceId == 162);
+
+                Iterable<Translations> _getTrans(int id) {
+                  return allAyahs[index].translations!.where(
+                      (Translations element) => element.resourceId == id);
+                }
+
                 // print('lets print the texts -> ');
                 // print(translationLang.elementAt(index).text);
                 if (index == 0) {
@@ -162,55 +169,111 @@ class SurahRead extends StatelessWidget {
                         builder: (BuildContext context, FontSizeProvider value,
                             Widget? child) {
                           return Text(
-                            allAyahs[index].textUthmani.toString(),
+                            value.arabicFontFamily == 'uthmani'
+                                ? allAyahs[index].textUthmani.toString()
+                                : allAyahs[index].textImlaeiSimple.toString(),
                             style: TextStyle(
                               fontSize: value.fontSize,
                               fontWeight: FontWeight.bold,
                             ),
                           );
                         },
-                        // child: Text(
-                        //   allAyahs[index].textUthmani.toString(),
-                        //   textAlign: TextAlign.right,
-                        //   style: TextStyle(
-                        //     // fontSize: Provider.of<FontSizeProvider>(context,
-                        //     //         listen: false)
-                        //     //     .fontSize,
-                        //     fontWeight: FontWeight.bold,
-                        //   ),
-                        // ),
                       ),
-                      RichText(
-                          text: TextSpan(children: <TextSpan>[
-                        TextSpan(
-                          // text: translation.text != null
-                          //     ? removeAllHtmlTags(translation.text!)
-                          //     : '',
-                          text: translationLang.first.text != null
-                              ? removeAllHtmlTags(translationLang.first.text!)
-                              : '',
-                          style: const TextStyle(
-                            fontSize: 20, color: Colors.black,
-                            // fontWeight: FontWeight.bold,
-                            fontWeight: FontWeight.w400,
-                            // color: Colors.black,
-                            letterSpacing: 0.9,
-                          ),
-                        ),
-                        TextSpan(
-                          text: '\n\n\t- ${translation.resourceName}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontStyle: FontStyle.italic,
-                            letterSpacing: 0.5,
-                            // fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ])),
-                      // NumSharePlayBookMarkCard(
-                      //   index: index,
-                      // ),
+                      Consumer<TransValProvider>(
+                        builder: (BuildContext context, TransValProvider value,
+                            Widget? child) {
+                          if (value.transList.isEmpty) {
+                            return RichText(
+                                text: TextSpan(children: <TextSpan>[
+                              TextSpan(
+                                text: _getTrans(131).first.text != null
+                                    ? removeAllHtmlTags(
+                                        _getTrans(131).first.text!)
+                                    : '',
+                                style: const TextStyle(
+                                  fontSize: 20, color: Colors.black,
+                                  // fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w400,
+                                  // color: Colors.black,
+                                  letterSpacing: 0.9,
+                                ),
+                              ),
+                              TextSpan(
+                                text:
+                                    '\n\n\t- ${_getTrans(131).first.resourceName}',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic,
+                                  letterSpacing: 0.5,
+                                  // fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ]));
+                          }
+                          // return every widget form value.transList
+                          return Column(
+                            children: <Widget>[
+                              for (int i = 0; i < value.transList.length; i++)
+                                RichText(
+                                  text: TextSpan(
+                                    style: TextStyle(
+                                      // change font color based on the theme
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: _getTrans(int.parse(
+                                                          value.transList[i]))
+                                                      .first
+                                                      .text !=
+                                                  null
+                                              ? removeAllHtmlTags(_getTrans(
+                                                      int.parse(
+                                                          value.transList[i]))
+                                                  .first
+                                                  .text!)
+                                              : '',
+                                          style: TextStyle(
+                                            fontSize: 30,
+                                            color: Colors.red,
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                            ],
+                          );
+                          // return RichText(
+                          //     text: TextSpan(children: <TextSpan>[
+                          //   TextSpan(
+                          //     text: translationLang.first.text != null
+                          //         ? removeAllHtmlTags(
+                          //             translationLang.first.text!)
+                          //         : '',
+                          //     style: const TextStyle(
+                          //       fontSize: 20, color: Colors.black,
+                          //       // fontWeight: FontWeight.bold,
+                          //       fontWeight: FontWeight.w400,
+                          //       // color: Colors.black,
+                          //       letterSpacing: 0.9,
+                          //     ),
+                          //   ),
+                          //   TextSpan(
+                          //     text: '\n\n\t- ${translation.resourceName}',
+                          //     style: const TextStyle(
+                          //       fontSize: 16,
+                          //       color: Colors.black,
+                          //       fontStyle: FontStyle.italic,
+                          //       letterSpacing: 0.5,
+                          //       // fontWeight: FontWeight.bold,
+                          //     ),
+                          //   ),
+                          // ]));
+                        },
+                      ),
                       const SizedBox(
                         height: 10,
                       ),

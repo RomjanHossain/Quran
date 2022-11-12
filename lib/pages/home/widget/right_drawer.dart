@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../model/translations/lan_and_code.dart';
-import '../../../model/translations/translations.dart';
+import '../components/ff_drop_down.dart';
 import '../components/lang_drawer_listview.dart';
 import 'fontsize_slider.dart';
 
@@ -32,12 +32,19 @@ class MyRightDrawer extends StatelessWidget {
           const Text('Arabic Font Size'),
           const FontSizeSlider(),
           // switch between arabic font family (uthmani/imlaei)
+          Row(
+            children: [
+              const Text('Arabic Font Family'),
+              const Spacer(),
+              const FontFamilyDropDown(),
+            ],
+          ),
 
           // show languageAndCode map as a list of buttons
           ...languageAndCode.keys.map(
-            (String key) {
-              return AllLangDrawerListView(
-                key2: key,
+            (String key2) {
+              return TransListInDrawer(
+                key2: key2,
               );
             },
           ),
