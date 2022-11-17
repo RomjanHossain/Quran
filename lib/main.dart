@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
           theme: themeNotifier.isDark
               ? ThemeData(
                   brightness: Brightness.dark,
-                  primarySwatch: Colors.blue,
                   useMaterial3: true,
+                  // primarySwatch: Colors.blue,
                 )
               : ThemeData(
                   useMaterial3: true,
