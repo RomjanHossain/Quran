@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -6,8 +7,6 @@ import 'package:provider/provider.dart';
 
 import '../../model/from_web/real_model.dart';
 import '../../model/surah_model/surah_model.dart';
-import '../../model/translations/lan_and_code.dart';
-import '../../model/translations/translations.dart';
 import '../../services/provider/font/font_size_provider.dart';
 import '../../services/provider/translate/trans_provider.dart';
 import '../../services/theme/theme_.dart';
@@ -29,6 +28,7 @@ class SurahRead extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      extendBody: true,
       endDrawer: const MyRightDrawer(),
       appBar: AppBar(
         title: const Text('Surah'),
@@ -66,12 +66,6 @@ class SurahRead extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemCount: allAyahs.length,
               itemBuilder: (BuildContext context, int index) {
-                final Translations translation =
-                    allAyahs[index].translations![1];
-                final Iterable<Translations> translationLang = allAyahs[index]
-                    .translations!
-                    .where((Translations element) => element.resourceId == 162);
-
                 Iterable<Translations> _getTrans(int id) {
                   return allAyahs[index].translations!.where(
                       (Translations element) => element.resourceId == id);
@@ -80,7 +74,6 @@ class SurahRead extends StatelessWidget {
                 // print('lets print the texts -> ');
                 // print(translationLang.elementAt(index).text);
                 if (index == 0) {
-                  print(translationLang.length);
                   return Container(
                     padding: const EdgeInsets.all(20),
                     margin: const EdgeInsets.symmetric(
@@ -88,7 +81,7 @@ class SurahRead extends StatelessWidget {
                       vertical: 20,
                     ),
                     decoration: BoxDecoration(
-                      color: kcolor2,
+                      // color: kcolor2,
                       borderRadius: BorderRadius.circular(10),
                       // boxShadow: const <BoxShadow>[
                       //   BoxShadow(
@@ -155,11 +148,11 @@ class SurahRead extends StatelessWidget {
                   );
                 }
                 return Container(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(20),
                   margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.blue.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   child: Column(
                     // mainAxisAlignment: MainAxisAlignment.start,
@@ -184,32 +177,34 @@ class SurahRead extends StatelessWidget {
                             Widget? child) {
                           if (value.transList.isEmpty) {
                             return RichText(
-                                text: TextSpan(children: <TextSpan>[
-                              TextSpan(
-                                text: _getTrans(131).first.text != null
-                                    ? removeAllHtmlTags(
-                                        _getTrans(131).first.text!)
-                                    : '',
-                                style: const TextStyle(
-                                  fontSize: 20, color: Colors.black,
-                                  // fontWeight: FontWeight.bold,
-                                  fontWeight: FontWeight.w400,
-                                  // color: Colors.black,
-                                  letterSpacing: 0.9,
-                                ),
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: _getTrans(131).first.text != null
+                                        ? removeAllHtmlTags(
+                                            _getTrans(131).first.text!)
+                                        : '',
+                                    style: const TextStyle(
+                                      fontSize: 20, color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                      // color: Colors.black,
+                                      letterSpacing: 0.9,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        '\n\n\t- ${_getTrans(131).first.resourceName}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontStyle: FontStyle.italic,
+                                      letterSpacing: 0.5,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              TextSpan(
-                                text:
-                                    '\n\n\t- ${_getTrans(131).first.resourceName}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontStyle: FontStyle.italic,
-                                  letterSpacing: 0.5,
-                                  // fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ]));
+                            );
                           }
                           // return every widget form value.transList
                           return Column(
@@ -226,21 +221,34 @@ class SurahRead extends StatelessWidget {
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: _getTrans(int.parse(
-                                                          value.transList[i]))
-                                                      .first
-                                                      .text !=
-                                                  null
-                                              ? removeAllHtmlTags(_getTrans(
-                                                      int.parse(
-                                                          value.transList[i]))
-                                                  .first
-                                                  .text!)
-                                              : '',
-                                          style: TextStyle(
-                                            fontSize: 30,
-                                            color: Colors.red,
-                                          ))
+                                        text: _getTrans(int.parse(
+                                                        value.transList[i]))
+                                                    .first
+                                                    .text !=
+                                                null
+                                            ? removeAllHtmlTags(_getTrans(
+                                                    int.parse(
+                                                        value.transList[i]))
+                                                .first
+                                                .text!)
+                                            : '',
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          // color: Colors.red,
+                                        ),
+                                      ),
+                                      // a textspan for next line
+                                      TextSpan(
+                                        text:
+                                            '\n\n\t- ${_getTrans(int.parse(value.transList[i])).first.resourceName}\n\n',
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          // color: Colors.black,
+                                          fontStyle: FontStyle.italic,
+                                          letterSpacing: 0.5,
+                                          // fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -292,6 +300,44 @@ class SurahRead extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         },
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
+        child: ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+            child: Container(
+              height: 80,
+              // margin: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                // color: Colors.blue,
+                color: Colors.grey.shade200.withOpacity(
+                    0.5), // border radius only for top left and top right
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back_ios),
+                    onPressed: () {},
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FloatingActionButton.large(onPressed: () {}),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.arrow_forward_ios),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

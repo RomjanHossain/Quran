@@ -33,10 +33,10 @@ class MyRightDrawer extends StatelessWidget {
           const FontSizeSlider(),
           // switch between arabic font family (uthmani/imlaei)
           Row(
-            children: [
-              const Text('Arabic Font Family'),
-              const Spacer(),
-              const FontFamilyDropDown(),
+            children: const <Widget>[
+              Text('Arabic Font Family'),
+              Spacer(),
+              FontFamilyDropDown(),
             ],
           ),
 

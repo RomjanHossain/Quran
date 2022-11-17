@@ -45,7 +45,7 @@ class SurahCard extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: kcolor2,
+          // color: kcolor2,
           borderRadius: BorderRadius.circular(5),
           boxShadow: const <BoxShadow>[
             BoxShadow(
@@ -64,9 +64,10 @@ class SurahCard extends StatelessWidget {
             //? Surah Number
             Text(
               '${index + 1}',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+                color: fontColor(context),
               ),
             ),
 

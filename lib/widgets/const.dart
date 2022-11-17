@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../services/theme/theme_.dart';
 
 ///
 Color kcolor2 = const Color(0xffe3fff3);
@@ -20,4 +23,10 @@ String removeAllHtmlTags(String htmlText) {
   final RegExp exp = RegExp(r'<[^>]*>', multiLine: true);
 
   return htmlText.replaceAll(exp, '');
+}
+
+Color fontColor(BuildContext context) {
+  return Provider.of<ModelTheme>(context, listen: false).isDark
+      ? Colors.white
+      : Colors.black;
 }

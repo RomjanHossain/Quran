@@ -24,6 +24,13 @@ class TransValProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // remove a value from transList
+  void removeTransList(String value) {
+    _transList.remove(value);
+    _preferences.setTransVal(_transList);
+    notifyListeners();
+  }
+
   // getting value from preferences
   Future<void> getPreferences() async {
     _transList = await _preferences.getTransVal() ?? <String>[];

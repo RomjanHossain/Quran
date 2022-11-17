@@ -33,11 +33,14 @@ class MyApp extends StatelessWidget {
               ? ThemeData(
                   brightness: Brightness.dark,
                   primarySwatch: Colors.blue,
+                  useMaterial3: true,
                 )
               : ThemeData(
+                  useMaterial3: true,
                   brightness: Brightness.light,
-                  primaryColor: Colors.green,
-                  primarySwatch: Colors.green),
+                  // primaryColor: Colors.green,
+                  // primarySwatch: Colors.green,
+                ),
           home: const MyHomePage(),
         );
       }),

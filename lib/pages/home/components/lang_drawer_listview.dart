@@ -29,34 +29,54 @@ class TransListInDrawer extends StatelessWidget {
           child: ListView.builder(
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
-              return InkWell(
-                onTap: () {
-                  Provider.of<TransValProvider>(context, listen: false)
-                      .addTransList(transShit
+              return Consumer<TransValProvider>(builder: (BuildContext context,
+                  TransValProvider value, Widget? child) {
+                return InkWell(
+                  onTap: () {
+                    if (value.transList.contains(transShit
+                        .where((Map<String, Object> element) =>
+                            element['languageId'] == languageAndCode[key2])
+                        .elementAt(index)['resourceId']
+                        .toString())) {
+                      value.removeTransList(transShit
                           .where((Map<String, Object> element) =>
                               element['languageId'] == languageAndCode[key2])
                           .elementAt(index)['resourceId']
                           .toString());
-                  // print(
-                  //   "${transShit.where((Map<String, Object> element) => element['languageId'] == languageAndCode[key2]).elementAt(index)['resourceId']}",
-                  // );
-                },
-                child: Container(
-                  // width: 100,
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                        // color: Colors.black,
-                        ),
+                    } else {
+                      value.addTransList(transShit
+                          .where((Map<String, Object> element) =>
+                              element['languageId'] == languageAndCode[key2])
+                          .elementAt(index)['resourceId']
+                          .toString());
+                    }
+                  },
+                  child: AnimatedContainer(
+                    // width: 100,
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: value.transList.contains(transShit
+                              .where((Map<String, Object> element) =>
+                                  element['languageId'] ==
+                                  languageAndCode[key2])
+                              .elementAt(index)['resourceId']
+                              .toString())
+                          ? Colors.blue
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                          // color: Colors.black,
+                          ),
+                    ),
+                    duration: const Duration(milliseconds: 500),
+                    child: Text(
+                      "${transShit.where((Map<String, Object> element) => element['languageId'] == languageAndCode[key2]).elementAt(index)['resourceName']}",
+                    ),
                   ),
-                  child: Text(
-                    "${transShit.where((Map<String, Object> element) => element['languageId'] == languageAndCode[key2]).elementAt(index)['resourceName']}",
-                  ),
-                ),
-              );
+                );
+              });
             },
             itemCount: transShit
                 .where((Map<String, Object> element) =>
