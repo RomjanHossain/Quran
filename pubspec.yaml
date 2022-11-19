@@ -9,10 +9,12 @@ environment:
   sdk: ">=2.18.4 <3.0.0"
 
 dependencies:
+  audio_video_progress_bar: ^0.11.0
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
   flutter_svg: ^1.1.6
+  just_audio: ^0.9.30
   provider: ^6.0.4
   shared_preferences: ^2.0.15
 
@@ -27,6 +29,7 @@ flutter:
   assets:
     - assets/svgs/
     - assets/surahs/
+    - assets/images/
   # - assets/recitation/
   # fonts:
   #   - family: Schyler

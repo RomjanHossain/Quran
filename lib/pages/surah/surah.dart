@@ -1,20 +1,22 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:provider/provider.dart';
-import 'package:quran/pages/surah/widget/recitation_popup.dart';
-import 'package:quran/pages/surah/widget/surah_playbutton.dart';
 
 import '../../model/from_web/real_model.dart';
 import '../../model/surah_model/surah_model.dart';
 import '../../services/provider/font/font_size_provider.dart';
+import '../../services/provider/play/play_provider.dart';
 import '../../services/provider/translate/trans_provider.dart';
 import '../../services/theme/theme_.dart';
 import '../../widgets/const.dart';
 import '../home/widget/right_drawer.dart';
+import 'widget/recitation_popup.dart';
 import 'widget/small_div.dart';
+import 'widget/surah_playbutton.dart';
 
 class SurahRead extends StatelessWidget {
   SurahRead({
@@ -320,27 +322,44 @@ class SurahRead extends StatelessWidget {
                   topRight: Radius.circular(30),
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+              child: Column(
                 children: <Widget>[
-                  RecitationPopupBtn(),
                   Expanded(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back_ios),
-                          onPressed: () {},
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: CenterButtonWidget(),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_forward_ios),
-                          onPressed: () {},
+                        const RecitationPopupBtn(),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              IconButton(
+                                icon: const Icon(Icons.arrow_back_ios),
+                                onPressed: () {},
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CenterButtonWidget(
+                                  index: ind,
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.arrow_forward_ios),
+                                onPressed: () {},
+                              ),
+                            ],
+                          ),
                         ),
                       ],
+                    ),
+                  ),
+
+                  // show a progress bar
+                  SizedBox(
+                    height: 10,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: const ProgressOfPlayer(),
                     ),
                   ),
                 ],
@@ -348,6 +367,28 @@ class SurahRead extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ProgressOfPlayer extends StatefulWidget {
+  const ProgressOfPlayer({
+    super.key,
+  });
+
+  @override
+  State<ProgressOfPlayer> createState() => _ProgressOfPlayerState();
+}
+
+class _ProgressOfPlayerState extends State<ProgressOfPlayer> {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<PlayProvider>(
+      builder: (BuildContext context, PlayProvider playprov, Widget? child) =>
+          ProgressBar(
+        progress: playprov.player.position,
+        total: playprov.player.duration ?? const Duration(seconds: 10),
       ),
     );
   }

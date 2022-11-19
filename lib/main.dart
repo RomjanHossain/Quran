@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'pages/home.dart';
 import 'services/provider/font/font_size_provider.dart';
+import 'services/provider/play/play_provider.dart';
 import 'services/provider/translate/trans_provider.dart';
 import 'services/theme/theme_.dart';
 
@@ -23,6 +24,8 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) => TransValProvider()),
         ChangeNotifierProvider<FontSizeProvider>(
             create: (BuildContext context) => FontSizeProvider()),
+        ChangeNotifierProvider<PlayProvider>(
+            create: (BuildContext context) => PlayProvider()),
       ],
       // create: (BuildContext context) => ModelTheme(),
       child: Consumer<ModelTheme>(builder:

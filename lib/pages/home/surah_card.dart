@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/surah_model/surah_model.dart';
+import '../../services/provider/play/play_provider.dart';
 import '../../widgets/const.dart';
 import '../surah/surah.dart';
 
@@ -17,6 +19,7 @@ class SurahCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
+        Provider.of<PlayProvider>(context, listen: false).setPlayIndex(index);
         await Navigator.of(context).push<dynamic>(
           PageRouteBuilder<dynamic>(
             pageBuilder: (

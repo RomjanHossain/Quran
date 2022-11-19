@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:quran/services/json/quar_recitation.dart';
+import 'package:provider/provider.dart';
+import '../../../services/json/quar_recitation.dart';
+import '../../../services/provider/play/play_provider.dart';
 
-class RecitationPopupBtn extends StatelessWidget {
-  RecitationPopupBtn({
+/// recitaion popup
+class RecitationPopupBtn extends StatefulWidget {
+  const RecitationPopupBtn({
     super.key,
   });
-  List<String> sheikh_name_list = quarn_recitation.entries
-      .map((e) => e.value['sheikh_name_en'].toString())
+
+  @override
+  State<RecitationPopupBtn> createState() => _RecitationPopupBtnState();
+}
+
+class _RecitationPopupBtnState extends State<RecitationPopupBtn> {
+  List<String> sheikhNameList = quarnRecitation.entries
+      .map((MapEntry<String, Map<String, Object>> e) =>
+          e.value['sheikh_name_en'].toString())
       .toList();
+  String defaultName =
+      quarnRecitation.entries.first.value['sheikh_name_en'].toString();
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +31,32 @@ class RecitationPopupBtn extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: PopupMenuButton(
-        icon: Icon(
-          Icons.abc_rounded,
-          color: Colors.black,
-        ),
-        itemBuilder: (context) {
-          return sheikh_name_list
-              .map((e) => PopupMenuItem(
-                    child: Text(e),
+      child: PopupMenuButton<dynamic>(
+        icon: Provider.of<PlayProvider>(context, listen: false).playName.isEmpty
+            ? Image.asset(
+                'assets/images/$defaultName.jpg',
+                // alignment: Alignment.center,
+                fit: BoxFit.fitHeight,
+              )
+            : Image.asset(
+                'assets/images/${Provider.of<PlayProvider>(context, listen: false).playName}.jpg',
+                // alignment: Alignment.center,
+                fit: BoxFit.fitHeight,
+              ),
+        itemBuilder: (BuildContext context) {
+          return sheikhNameList
+              .map((String e) => PopupMenuItem<dynamic>(
+                    child: listTileSheikhItems(e, 'assets/images/$e.jpg'),
+                    onTap: () {
+                      Provider.of<PlayProvider>(context, listen: false)
+                          .addPlayer(e);
+                      Provider.of<PlayProvider>(context, listen: false)
+                          .setPlayerUrl();
+
+                      setState(() {
+                        defaultName = e;
+                      });
+                    },
                   ))
               .toList();
         },
@@ -39,3 +68,12 @@ class RecitationPopupBtn extends StatelessWidget {
 // enum RecitationAuthorName {
 
 // }
+/// list tile for sheikh
+Widget listTileSheikhItems(String sheikhName, String sheikhImage) {
+  return ListTile(
+    leading: CircleAvatar(
+      backgroundImage: AssetImage(sheikhImage),
+    ),
+    title: Text(sheikhName),
+  );
+}

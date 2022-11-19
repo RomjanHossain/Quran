@@ -1,5 +1,6 @@
 /// quran recitation
-Map<String, Map<String, Object>> quarn_recitation = {
+Map<String, Map<String, Object>> quarnRecitation =
+    <String, Map<String, Object>>{
   '1': <String, Object>{
     'sheikh_name_bn':
         '\u09b6\u09be\u0987\u0996 \u0986\u09ac\u09cd\u09a6\u09c1\u09b0 \u09b0\u09b9\u09ae\u09be\u09a8 \u0986\u09b8 \u09b8\u09c1\u09a6\u09be\u0987\u09b8',
@@ -2394,8 +2395,8 @@ Map<String, Map<String, Object>> quarn_recitation = {
     'sheikh_name_bn':
         '\u09b6\u09be\u0987\u0996 \u0987\u09af\u09bc\u09be\u09b8\u09bf\u09b0 \u0986\u09b2-\u09a6\u09cb\u09b6\u09be\u09b0\u09c0',
     'sheikh_name_en': 'Yasser Al-Dosari',
-    'recitations': {
-      'id': [
+    'recitations': <String, Object>{
+      'id': <int>[
         1,
         2,
         3,
@@ -2511,7 +2512,7 @@ Map<String, Map<String, Object>> quarn_recitation = {
         113,
         114
       ],
-      'surahs': [
+      'surahs': <String>[
         'http://download.quranicaudio.com/quran/yasser_ad-dussary/001.mp3',
         'http://download.quranicaudio.com/quran/yasser_ad-dussary/002.mp3',
         'http://download.quranicaudio.com/quran/yasser_ad-dussary/003.mp3',
