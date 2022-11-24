@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quran/services/json/quar_recitation.dart';
+import '../services/json/quar_recitation.dart';
 
 import '../services/theme/theme_.dart';
 

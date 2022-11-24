@@ -34,6 +34,7 @@ class PlayProvider extends ChangeNotifier {
   void setPlayerUrl() {
     final String name =
         _playName.isEmpty ? 'Abdul-Rahman Al-Sudais' : _playName;
+    // ignore: no_leading_underscores_for_local_identifiers
     final String _url = getTheUrlOfCurrentIndexAndSheikh(name, _playIndex);
     player.setUrl(_url);
     notifyListeners();

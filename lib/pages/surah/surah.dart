@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:provider/provider.dart';
@@ -97,7 +96,7 @@ class SurahRead extends StatelessWidget {
                       decoration: BoxDecoration(
                         // set an image with opacity
                         image: DecorationImage(
-                          image: NetworkImage(
+                          image: const NetworkImage(
                               'https://images.unsplash.com/photo-1596125160970-6f02eeba00d3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cXVyYW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60'),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(
@@ -148,6 +147,7 @@ class SurahRead extends StatelessWidget {
                     ),
                   );
                 } else {
+                  // ignore: no_leading_underscores_for_local_identifiers
                   Iterable<Translations> _getTrans(int id) {
                     return allAyahs[index - 1].translations!.where(
                         (Translations element) => element.resourceId == id);
@@ -347,7 +347,6 @@ class SurahRead extends StatelessWidget {
                                 (String element) => element == currentSheikh);
                             // change the recitation sheikh to previous
                             if (i != 0) {
-                              print('$i  $currentSheikh');
                               context
                                   .read<PlayProvider>()
                                   .addPlayer(sheikhNameList[i - 1]);
@@ -371,7 +370,6 @@ class SurahRead extends StatelessWidget {
                             final int length = sheikhNameList.length;
                             // change the recitation sheikh to next
                             if (i != length - 1) {
-                              print(' $length $i  $currentSheikh ');
                               context
                                   .read<PlayProvider>()
                                   .addPlayer(sheikhNameList[i + 1]);

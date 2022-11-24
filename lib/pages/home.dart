@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quran/pages/settings/settings_quran.dart';
+
 import 'real_home.dart';
+import 'settings/settings_quran.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
