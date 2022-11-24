@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quran/services/json/quar_recitation.dart';
 
 import '../services/theme/theme_.dart';
 
@@ -30,3 +31,8 @@ Color fontColor(BuildContext context) {
       ? Colors.white
       : Colors.black;
 }
+
+List<String> sheikhNameList = quarnRecitation.entries
+    .map((MapEntry<String, Map<String, Object>> e) =>
+        e.value['sheikh_name_en'].toString())
+    .toList();

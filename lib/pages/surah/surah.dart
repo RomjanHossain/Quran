@@ -322,44 +322,56 @@ class SurahRead extends StatelessWidget {
                   topRight: Radius.circular(30),
                 ),
               ),
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
+                  const RecitationPopupBtn(),
                   Expanded(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        const RecitationPopupBtn(),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              IconButton(
-                                icon: const Icon(Icons.arrow_back_ios),
-                                onPressed: () {},
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CenterButtonWidget(
-                                  index: ind,
-                                ),
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.arrow_forward_ios),
-                                onPressed: () {},
-                              ),
-                            ],
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios),
+                          onPressed: () {
+                            final String currentSheikh =
+                                context.read<PlayProvider>().playName;
+                            final int index = sheikhNameList.indexWhere(
+                                (String element) => element == currentSheikh);
+                            // change the recitation sheikh to previous
+                            if (index != 0) {
+                              print('$index  $currentSheikh');
+                              context
+                                  .read<PlayProvider>()
+                                  .addPlayer(sheikhNameList[index - 1]);
+                              context.read<PlayProvider>().setPlayerUrl();
+                            }
+                          },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CenterButtonWidget(
+                            index: ind,
                           ),
                         ),
+                        IconButton(
+                          icon: const Icon(Icons.arrow_forward_ios),
+                          onPressed: () {
+                            final String currentSheikh =
+                                context.read<PlayProvider>().playName;
+                            final int index = sheikhNameList.indexWhere(
+                                (String element) => element == currentSheikh);
+                            final int length = sheikhNameList.length;
+                            // change the recitation sheikh to next
+                            if (index != length - 1) {
+                              print(' $length $index  $currentSheikh ');
+                              context
+                                  .read<PlayProvider>()
+                                  .addPlayer(sheikhNameList[index + 1]);
+                              context.read<PlayProvider>().setPlayerUrl();
+                            }
+                          },
+                        ),
                       ],
-                    ),
-                  ),
-
-                  // show a progress bar
-                  SizedBox(
-                    height: 10,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: const ProgressOfPlayer(),
                     ),
                   ),
                 ],
@@ -372,24 +384,37 @@ class SurahRead extends StatelessWidget {
   }
 }
 
-class ProgressOfPlayer extends StatefulWidget {
-  const ProgressOfPlayer({
-    super.key,
-  });
+// class ProgressOfPlayer extends StatefulWidget {
+//   const ProgressOfPlayer({
+//     super.key,
+//   });
 
-  @override
-  State<ProgressOfPlayer> createState() => _ProgressOfPlayerState();
-}
+//   @override
+//   State<ProgressOfPlayer> createState() => _ProgressOfPlayerState();
+// }
 
-class _ProgressOfPlayerState extends State<ProgressOfPlayer> {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<PlayProvider>(
-      builder: (BuildContext context, PlayProvider playprov, Widget? child) =>
-          ProgressBar(
-        progress: playprov.player.position,
-        total: playprov.player.duration ?? const Duration(seconds: 10),
-      ),
-    );
-  }
-}
+// class _ProgressOfPlayerState extends State<ProgressOfPlayer> {
+//   @override
+//   void dispose() {
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Consumer<PlayProvider>(
+//         builder: (BuildContext context, PlayProvider playprov, Widget? child) {
+//       // the the playprov.player.position changes then call the setState
+
+//       return StreamBuilder<Duration>(
+//           stream: playprov.player.positionStream,
+//           builder: (BuildContext context, AsyncSnapshot<Duration> snapshot) {
+//             print(snapshot);
+
+//             return ProgressBar(
+//               progress: snapshot.data ?? Duration(milliseconds: 200),
+//               total: playprov.player.duration ?? const Duration(seconds: 10),
+//             );
+//           });
+//     });
+//   }
+// }

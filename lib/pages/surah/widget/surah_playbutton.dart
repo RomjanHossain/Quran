@@ -50,9 +50,9 @@ class _CenterButtonWidgetState extends State<CenterButtonWidget> {
               _isPressed = false;
             });
           } else {
-            print('play btn clicked');
+            // print('play btn clicked');
             playProvider.player.play();
-            print(playProvider.player.playing);
+            // print(playProvider.player.playing);
             // player.play();
             setState(() {
               _isPressed = true;

@@ -25,57 +25,88 @@ class TransListInDrawer extends StatelessWidget {
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
-          height: 50,
+          height: 80,
           child: ListView.builder(
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
               return Consumer<TransValProvider>(builder: (BuildContext context,
                   TransValProvider value, Widget? child) {
-                return InkWell(
-                  onTap: () {
-                    if (value.transList.contains(transShit
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ChoiceChip(
+                    label: Text(
+                      "${transShit.where((Map<String, Object> element) => element['languageId'] == languageAndCode[key2]).elementAt(index)['resourceName']}",
+                    ),
+                    selected: value.transList.contains(transShit
                         .where((Map<String, Object> element) =>
                             element['languageId'] == languageAndCode[key2])
                         .elementAt(index)['resourceId']
-                        .toString())) {
-                      value.removeTransList(transShit
+                        .toString()),
+                    onSelected: (bool selected) async {
+                      if (value.transList.contains(transShit
                           .where((Map<String, Object> element) =>
                               element['languageId'] == languageAndCode[key2])
                           .elementAt(index)['resourceId']
-                          .toString());
-                    } else {
-                      value.addTransList(transShit
-                          .where((Map<String, Object> element) =>
-                              element['languageId'] == languageAndCode[key2])
-                          .elementAt(index)['resourceId']
-                          .toString());
-                    }
-                  },
-                  child: AnimatedContainer(
-                    // width: 100,
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    margin: const EdgeInsets.symmetric(horizontal: 5),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: value.transList.contains(transShit
-                              .where((Map<String, Object> element) =>
-                                  element['languageId'] ==
-                                  languageAndCode[key2])
-                              .elementAt(index)['resourceId']
-                              .toString())
-                          ? Colors.blue
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(
-                          // color: Colors.black,
-                          ),
-                    ),
-                    duration: const Duration(milliseconds: 500),
-                    child: Text(
-                      "${transShit.where((Map<String, Object> element) => element['languageId'] == languageAndCode[key2]).elementAt(index)['resourceName']}",
-                    ),
+                          .toString())) {
+                        value.removeTransList(transShit
+                            .where((Map<String, Object> element) =>
+                                element['languageId'] == languageAndCode[key2])
+                            .elementAt(index)['resourceId']
+                            .toString());
+                      } else {
+                        value.addTransList(transShit
+                            .where((Map<String, Object> element) =>
+                                element['languageId'] == languageAndCode[key2])
+                            .elementAt(index)['resourceId']
+                            .toString());
+                      }
+                    },
                   ),
                 );
+                // return InkWell(
+                //   onTap: () {
+                //     if (value.transList.contains(transShit
+                //         .where((Map<String, Object> element) =>
+                //             element['languageId'] == languageAndCode[key2])
+                //         .elementAt(index)['resourceId']
+                //         .toString())) {
+                //       value.removeTransList(transShit
+                //           .where((Map<String, Object> element) =>
+                //               element['languageId'] == languageAndCode[key2])
+                //           .elementAt(index)['resourceId']
+                //           .toString());
+                //     } else {
+                //       value.addTransList(transShit
+                //           .where((Map<String, Object> element) =>
+                //               element['languageId'] == languageAndCode[key2])
+                //           .elementAt(index)['resourceId']
+                //           .toString());
+                //     }
+                //   },
+                //   child: AnimatedContainer(
+                //     padding: const EdgeInsets.symmetric(horizontal: 5),
+                //     margin: const EdgeInsets.symmetric(horizontal: 5),
+                //     alignment: Alignment.center,
+                //     decoration: BoxDecoration(
+                //       color: value.transList.contains(transShit
+                //               .where((Map<String, Object> element) =>
+                //                   element['languageId'] ==
+                //                   languageAndCode[key2])
+                //               .elementAt(index)['resourceId']
+                //               .toString())
+                //           ? Colors.blue
+                //           : Colors.transparent,
+                //       borderRadius: BorderRadius.circular(5),
+                //       border: Border.all(
+                //           // color: Colors.black,
+                //           ),
+                //     ),
+                //     duration: const Duration(milliseconds: 500),
+                //     child: Text(
+                //       "${transShit.where((Map<String, Object> element) => element['languageId'] == languageAndCode[key2]).elementAt(index)['resourceName']}",
+                //     ),
+                //   ),
+                // );
               });
             },
             itemCount: transShit

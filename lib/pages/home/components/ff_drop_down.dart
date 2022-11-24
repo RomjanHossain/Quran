@@ -18,6 +18,14 @@ class _FontFamilyDropDownState extends State<FontFamilyDropDown> {
     return DropdownButton<String>(
       value: Provider.of<FontSizeProvider>(context, listen: false)
           .arabicFontFamily,
+      alignment: Alignment.centerRight,
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
+      // isExpanded: true,
+      underline: Container(
+        // height: 2,
+        color: Colors.transparent,
+      ),
+      // style: const TextStyle(color: Colors.black),
       items: const <String>['uthmani', 'imlaei']
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(

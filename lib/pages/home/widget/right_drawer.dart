@@ -12,41 +12,55 @@ class MyRightDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          bottomLeft: Radius.circular(20),
+        ),
+      ),
+      child: Column(
         children: <Widget>[
-          // a button to close the drawer
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              const Text('Configurations'),
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(Icons.close),
-              ),
-            ],
-          ),
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                TextButton.icon(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.close),
+                    label: const Text('Close')),
+                //! arabic font size slider
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('Arabic Font Size'),
+                ),
+                const FontSizeSlider(),
+                // switch between arabic font family (uthmani/imlaei)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: const <Widget>[
+                      Text('Arabic Font Family'),
+                      Spacer(),
+                      FontFamilyDropDown(),
+                    ],
+                  ),
+                ),
 
-          //! arabic font size slider
-          const Text('Arabic Font Size'),
-          const FontSizeSlider(),
-          // switch between arabic font family (uthmani/imlaei)
-          Row(
-            children: const <Widget>[
-              Text('Arabic Font Family'),
-              Spacer(),
-              FontFamilyDropDown(),
-            ],
+                // show languageAndCode map as a list of buttons
+                ...languageAndCode.keys.map(
+                  (String key2) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TransListInDrawer(
+                        key2: key2,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-
-          // show languageAndCode map as a list of buttons
-          ...languageAndCode.keys.map(
-            (String key2) {
-              return TransListInDrawer(
-                key2: key2,
-              );
-            },
+          const SizedBox(
+            height: 30,
           ),
         ],
       ),
