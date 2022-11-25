@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
               ? ThemeData(
                   brightness: Brightness.dark,
                   useMaterial3: true,
-                  // primarySwatch: Colors.lightGreen,
+                  // primarySwatch: Colors.indigo,
 
                   // scaffoldBackgroundColor: const Color(0xff171813),
                   // scaffoldBackgroundColor: Colors.yellow,
@@ -47,6 +47,8 @@ class MyApp extends StatelessWidget {
               : ThemeData(
                   useMaterial3: true,
                   brightness: Brightness.light,
+                  // primarySwatch: Colors.indigo,
+
                   // primarySwatch: Colors.pink,
                   // primaryColor: Colors.green,
                   // primarySwatch: Colors.green,

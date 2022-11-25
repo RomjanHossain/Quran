@@ -322,8 +322,8 @@ class SurahRead extends StatelessWidget {
               // margin: const EdgeInsets.all(3),
               decoration: BoxDecoration(
                 // color: Colors.blue,
-                color: Colors.grey.shade200.withOpacity(
-                    0.5), // border radius only for top left and top right
+                color: Theme.of(context).primaryColor.withOpacity(0.5),
+                // border radius only for top left and top right
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
