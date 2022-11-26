@@ -24,9 +24,10 @@ class MyRightDrawer extends StatelessWidget {
             child: ListView(
               children: <Widget>[
                 TextButton.icon(
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.close),
-                    label: const Text('Close')),
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.close),
+                  label: const Text('Close'),
+                ),
                 //! arabic font size slider
                 const Padding(
                   padding: EdgeInsets.all(8.0),

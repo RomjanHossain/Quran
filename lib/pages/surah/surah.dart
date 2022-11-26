@@ -112,7 +112,7 @@ class SurahRead extends StatelessWidget {
                           // name
                           Text(
                             surah.nameEn,
-                            style: Theme.of(context).textTheme.headline2,
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           // name meaning
                           Text(
@@ -153,105 +153,60 @@ class SurahRead extends StatelessWidget {
                         (Translations element) => element.resourceId == id);
                   }
 
-                  return Card(
-                    margin: const EdgeInsets.all(10),
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Consumer<FontSizeProvider>(
-                            builder: (BuildContext context,
-                                FontSizeProvider value, Widget? child) {
-                              return Text(
-                                value.arabicFontFamily == 'uthmani'
-                                    ? allAyahs[index - 1].textUthmani.toString()
-                                    : allAyahs[index - 1]
-                                        .textImlaeiSimple
-                                        .toString(),
-                                style: TextStyle(
-                                  fontSize: value.fontSize,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.end,
-                              );
-                            },
-                          ),
-                          Consumer<TransValProvider>(
-                            builder: (BuildContext context,
-                                TransValProvider value, Widget? child) {
-                              if (value.transList.isEmpty) {
-                                return RichText(
-                                  // textAlign: TextAlign.end,
-                                  text: TextSpan(
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: _getTrans(131).first.text != null
-                                            ? removeAllHtmlTags(
-                                                _getTrans(131).first.text!)
-                                            : '',
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w400,
-                                          // color: Colors.black,
-                                          letterSpacing: 0.9,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text:
-                                            '\n\n- ${_getTrans(131).first.resourceName}',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontStyle: FontStyle.italic,
-                                          letterSpacing: 0.5,
-                                          // fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                              //! return every widget form value.transList
-                              return Column(
-                                children: <Widget>[
-                                  for (int i = 0;
-                                      i < value.transList.length;
-                                      i++)
-                                    RichText(
+                  return Stack(
+                    children: <Widget>[
+                      Card(
+                        margin: const EdgeInsets.all(10),
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Consumer<FontSizeProvider>(
+                                builder: (BuildContext context,
+                                    FontSizeProvider value, Widget? child) {
+                                  return Text(
+                                    value.arabicFontFamily == 'uthmani'
+                                        ? allAyahs[index - 1]
+                                            .textUthmani
+                                            .toString()
+                                        : allAyahs[index - 1]
+                                            .textImlaeiSimple
+                                            .toString(),
+                                    style: TextStyle(
+                                      fontSize: value.fontSize,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.end,
+                                  );
+                                },
+                              ),
+                              Consumer<TransValProvider>(
+                                builder: (BuildContext context,
+                                    TransValProvider value, Widget? child) {
+                                  if (value.transList.isEmpty) {
+                                    return RichText(
+                                      // textAlign: TextAlign.end,
                                       text: TextSpan(
-                                        style: TextStyle(
-                                          // change font color based on the theme
-                                          color: Theme.of(context).brightness ==
-                                                  Brightness.dark
-                                              ? Colors.white
-                                              : Colors.black,
-                                        ),
                                         children: <TextSpan>[
-                                          const TextSpan(text: '\n'),
                                           TextSpan(
-                                            text: _getTrans(int.parse(
-                                                            value.transList[i]))
-                                                        .first
-                                                        .text !=
+                                            text: _getTrans(131).first.text !=
                                                     null
-                                                ? removeAllHtmlTags(_getTrans(
-                                                        int.parse(
-                                                            value.transList[i]))
-                                                    .first
-                                                    .text!)
+                                                ? removeAllHtmlTags(
+                                                    _getTrans(131).first.text!)
                                                 : '',
                                             style: const TextStyle(
                                               fontSize: 20,
-                                              // color: Colors.red,
+                                              fontWeight: FontWeight.w400,
+                                              // color: Colors.black,
+                                              letterSpacing: 0.9,
                                             ),
                                           ),
-                                          // a textspan for next line
                                           TextSpan(
                                             text:
-                                                '\n\n\t- ${_getTrans(int.parse(value.transList[i])).first.resourceName}\n\n',
+                                                '\n\n- ${_getTrans(131).first.resourceName}',
                                             style: const TextStyle(
-                                              fontSize: 15,
-                                              // color: Colors.black,
+                                              fontSize: 16,
                                               fontStyle: FontStyle.italic,
                                               letterSpacing: 0.5,
                                               // fontWeight: FontWeight.bold,
@@ -259,47 +214,134 @@ class SurahRead extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                    ),
-                                ],
-                              );
-                              // return RichText(
-                              //     text: TextSpan(children: <TextSpan>[
-                              //   TextSpan(
-                              //     text: translationLang.first.text != null
-                              //         ? removeAllHtmlTags(
-                              //             translationLang.first.text!)
-                              //         : '',
-                              //     style: const TextStyle(
-                              //       fontSize: 20, color: Colors.black,
-                              //       // fontWeight: FontWeight.bold,
-                              //       fontWeight: FontWeight.w400,
-                              //       // color: Colors.black,
-                              //       letterSpacing: 0.9,
-                              //     ),
-                              //   ),
-                              //   TextSpan(
-                              //     text: '\n\n\t- ${translation.resourceName}',
-                              //     style: const TextStyle(
-                              //       fontSize: 16,
-                              //       color: Colors.black,
-                              //       fontStyle: FontStyle.italic,
-                              //       letterSpacing: 0.5,
-                              //       // fontWeight: FontWeight.bold,
-                              //     ),
-                              //   ),
-                              // ]));
-                            },
+                                    );
+                                  }
+                                  //! return every widget form value.transList
+                                  return Column(
+                                    children: <Widget>[
+                                      for (int i = 0;
+                                          i < value.transList.length;
+                                          i++)
+                                        RichText(
+                                          text: TextSpan(
+                                            style: TextStyle(
+                                              // change font color based on the theme
+                                              color: Theme.of(context)
+                                                          .brightness ==
+                                                      Brightness.dark
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                            ),
+                                            children: <TextSpan>[
+                                              const TextSpan(text: '\n'),
+                                              TextSpan(
+                                                text: _getTrans(int.parse(value
+                                                                .transList[i]))
+                                                            .first
+                                                            .text !=
+                                                        null
+                                                    ? removeAllHtmlTags(
+                                                        _getTrans(int.parse(
+                                                                value.transList[
+                                                                    i]))
+                                                            .first
+                                                            .text!)
+                                                    : '',
+                                                style: const TextStyle(
+                                                  fontSize: 20,
+                                                  // color: Colors.red,
+                                                ),
+                                              ),
+                                              // a textspan for next line
+                                              TextSpan(
+                                                text:
+                                                    '\n\n\t- ${_getTrans(int.parse(value.transList[i])).first.resourceName}\n\n',
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  // color: Colors.black,
+                                                  fontStyle: FontStyle.italic,
+                                                  letterSpacing: 0.5,
+                                                  // fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                    ],
+                                  );
+                                  // return RichText(
+                                  //     text: TextSpan(children: <TextSpan>[
+                                  //   TextSpan(
+                                  //     text: translationLang.first.text != null
+                                  //         ? removeAllHtmlTags(
+                                  //             translationLang.first.text!)
+                                  //         : '',
+                                  //     style: const TextStyle(
+                                  //       fontSize: 20, color: Colors.black,
+                                  //       // fontWeight: FontWeight.bold,
+                                  //       fontWeight: FontWeight.w400,
+                                  //       // color: Colors.black,
+                                  //       letterSpacing: 0.9,
+                                  //     ),
+                                  //   ),
+                                  //   TextSpan(
+                                  //     text: '\n\n\t- ${translation.resourceName}',
+                                  //     style: const TextStyle(
+                                  //       fontSize: 16,
+                                  //       color: Colors.black,
+                                  //       fontStyle: FontStyle.italic,
+                                  //       letterSpacing: 0.5,
+                                  //       // fontWeight: FontWeight.bold,
+                                  //     ),
+                                  //   ),
+                                  // ]));
+                                },
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const SmallDivider(),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const SmallDivider(),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+
+                      // top left circularavater for surah number
+                      Positioned(
+                        top: 15,
+                        left: 15,
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            // color:
+                            //     Theme.of(context).brightness == Brightness.dark
+                            //         ? Colors.black
+                            //         : Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              allAyahs[index - 1].verseNumber.toString(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   );
                 }
                 // futurebuilder which loads a local json file
@@ -313,75 +355,77 @@ class SurahRead extends StatelessWidget {
       ),
       //! bottom playing bar
       bottomNavigationBar: BottomAppBar(
-        color: Colors.transparent,
-        child: ClipRRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-            child: Container(
-              height: 80,
-              // margin: const EdgeInsets.all(3),
-              decoration: BoxDecoration(
-                // color: Colors.blue,
-                color: Theme.of(context).primaryColor.withOpacity(0.5),
-                // border radius only for top left and top right
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
+        // color: Colors.green,
+        // surfaceTintColor: Colors.blue,
+        clipBehavior: Clip.antiAlias,
+        padding: const EdgeInsets.all(10),
+
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          child: Container(
+            // height: 80,
+            // margin: const EdgeInsets.all(3),
+            decoration: const BoxDecoration(
+              // color: Colors.blue,
+              color: Colors.transparent,
+              // border radius only for top left and top right
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
               ),
-              //! the bottom bar for playing
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  const RecitationPopupBtn(),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back_ios),
-                          onPressed: () {
-                            final String currentSheikh =
-                                context.read<PlayProvider>().playName;
-                            final int i = sheikhNameList.indexWhere(
-                                (String element) => element == currentSheikh);
-                            // change the recitation sheikh to previous
-                            if (i != 0) {
-                              context
-                                  .read<PlayProvider>()
-                                  .addPlayer(sheikhNameList[i - 1]);
-                              context.read<PlayProvider>().setPlayerUrl();
-                            }
-                          },
+            ),
+            //! the bottom bar for playing
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                const RecitationPopupBtn(),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back_ios),
+                        onPressed: () {
+                          final String currentSheikh =
+                              context.read<PlayProvider>().playName;
+                          final int i = sheikhNameList.indexWhere(
+                              (String element) => element == currentSheikh);
+                          // change the recitation sheikh to previous
+                          if (i != 0) {
+                            context
+                                .read<PlayProvider>()
+                                .addPlayer(sheikhNameList[i - 1]);
+                            context.read<PlayProvider>().setPlayerUrl();
+                          }
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CenterButtonWidget(
+                          index: ind,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CenterButtonWidget(
-                            index: ind,
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_forward_ios),
-                          onPressed: () {
-                            final String currentSheikh =
-                                context.read<PlayProvider>().playName;
-                            final int i = sheikhNameList.indexWhere(
-                                (String element) => element == currentSheikh);
-                            final int length = sheikhNameList.length;
-                            // change the recitation sheikh to next
-                            if (i != length - 1) {
-                              context
-                                  .read<PlayProvider>()
-                                  .addPlayer(sheikhNameList[i + 1]);
-                              context.read<PlayProvider>().setPlayerUrl();
-                            }
-                          },
-                        ),
-                      ],
-                    ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_forward_ios),
+                        onPressed: () {
+                          final String currentSheikh =
+                              context.read<PlayProvider>().playName;
+                          final int i = sheikhNameList.indexWhere(
+                              (String element) => element == currentSheikh);
+                          final int length = sheikhNameList.length;
+                          // change the recitation sheikh to next
+                          if (i != length - 1) {
+                            context
+                                .read<PlayProvider>()
+                                .addPlayer(sheikhNameList[i + 1]);
+                            context.read<PlayProvider>().setPlayerUrl();
+                          }
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

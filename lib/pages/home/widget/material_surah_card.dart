@@ -69,7 +69,7 @@ class MaterialSurahCard extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).colorScheme.surfaceVariant,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
@@ -101,7 +101,7 @@ class MaterialSurahCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        getType(surah.revelationType.replaceAll(' ', '')),
+                        '${getType(surah.revelationType.replaceAll(' ', ''))}\t\t-\t\t',
                         style: const TextStyle(
                           fontSize: 16,
                           // fontWeight: FontWeight.bold,

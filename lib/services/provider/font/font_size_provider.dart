@@ -5,6 +5,7 @@ class FontSizeProvider extends ChangeNotifier {
   FontSizeProvider() {
     _fontSize = 40;
     _arabicFontFamily = 'uthmani';
+    _isBn = false;
     _preferences = MyFontSizePreferences();
     _fontFamilyPreferences = MyFontFamilyPreferences();
 
@@ -29,11 +30,21 @@ class FontSizeProvider extends ChangeNotifier {
 
   /// get font family
   String get arabicFontFamily => _arabicFontFamily;
+  // is bangla name
+  late bool _isBn;
+  // get is bangla name
+  bool get isBn => _isBn;
 
   // setting font size value
   set fontSize(double value) {
     _fontSize = value;
     _preferences.setFontSize(value);
+    notifyListeners();
+  }
+
+  // setting is bangla name
+  set isBn(bool value) {
+    _isBn = value;
     notifyListeners();
   }
 

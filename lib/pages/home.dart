@@ -34,9 +34,11 @@ class _MyHomePageState extends State<MyHomePage> {
         // backgroundColor: Theme.of(context).primaryColor,
         // surfaceTintColor: Theme.of(context).primaryColor,
         selectedIndex: _selectedIndex,
-        onDestinationSelected: (int value) => setState(() {
-          _selectedIndex = value;
-        }),
+        onDestinationSelected: (int value) => setState(
+          () {
+            _selectedIndex = value;
+          },
+        ),
         // navigation transparency
         destinations: const <NavigationDestination>[
           NavigationDestination(
