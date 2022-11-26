@@ -31,6 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: NavigationBar(
+        // backgroundColor: Theme.of(context).primaryColor,
+        // surfaceTintColor: Theme.of(context).primaryColor,
         selectedIndex: _selectedIndex,
         onDestinationSelected: (int value) => setState(() {
           _selectedIndex = value;

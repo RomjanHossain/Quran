@@ -36,22 +36,44 @@ class MyApp extends StatelessWidget {
               ? ThemeData(
                   brightness: Brightness.dark,
                   useMaterial3: true,
-                  // primarySwatch: Colors.indigo,
+                  primaryColor: themeNotifier.color,
+                  primarySwatch: MaterialColor(themeNotifier.color.value, {
+                    50: themeNotifier.color,
+                    100: themeNotifier.color,
+                    200: themeNotifier.color,
+                    300: themeNotifier.color,
+                    400: themeNotifier.color,
+                    500: themeNotifier.color,
+                    600: themeNotifier.color,
+                    700: themeNotifier.color,
+                    800: themeNotifier.color,
+                    900: themeNotifier.color,
+                  }),
+                  backgroundColor: themeNotifier.color,
+                  // nav button color
 
-                  // scaffoldBackgroundColor: const Color(0xff171813),
-                  // scaffoldBackgroundColor: Colors.yellow,
-                  // primaryColor: Colors.green,
-
-                  // colorScheme: ColorScheme.fromSwatch(),
+                  // scaffoldBackgroundColor: themeNotifier.color.withOpacity(0.2),
                 )
               : ThemeData(
                   useMaterial3: true,
                   brightness: Brightness.light,
-                  // primarySwatch: Colors.indigo,
+                  primaryColor: themeNotifier.color,
+                  primarySwatch: MaterialColor(themeNotifier.color.value, {
+                    50: themeNotifier.color,
+                    100: themeNotifier.color,
+                    200: themeNotifier.color,
+                    300: themeNotifier.color,
+                    400: themeNotifier.color,
+                    500: themeNotifier.color,
+                    600: themeNotifier.color,
+                    700: themeNotifier.color,
+                    800: themeNotifier.color,
+                    900: themeNotifier.color,
+                  }),
+                  backgroundColor: themeNotifier.color,
+                  dividerColor: themeNotifier.color,
 
-                  // primarySwatch: Colors.pink,
-                  // primaryColor: Colors.green,
-                  // primarySwatch: Colors.green,
+                  // scaffoldBackgroundColor: themeNotifier.color.withOpacity(0.2),
                 ),
           home: const MyHomePage(),
         );

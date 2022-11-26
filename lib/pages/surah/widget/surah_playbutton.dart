@@ -60,7 +60,7 @@ class _CenterButtonWidgetState extends State<CenterButtonWidget> {
           }
         },
 
-        // backgroundColor: Colors.indigo,
+        backgroundColor: Theme.of(context).primaryColor,
         // tooltip: 'long press to change the reciter',
         child:
             _isPressed ? const Icon(Icons.pause) : const Icon(Icons.play_arrow),
