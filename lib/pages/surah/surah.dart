@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:provider/provider.dart';
+import 'package:quran/pages/surah/widget/ayanumber.dart';
 
 import '../../model/from_web/real_model.dart';
 import '../../model/surah_model/surah_model.dart';
@@ -13,6 +14,7 @@ import '../../services/provider/translate/trans_provider.dart';
 import '../../services/theme/theme_.dart';
 import '../../widgets/const.dart';
 import '../home/widget/right_drawer.dart';
+import 'widget/is_sujud.dart';
 import 'widget/recitation_popup.dart';
 import 'widget/small_div.dart';
 import 'widget/surah_playbutton.dart';
@@ -27,6 +29,7 @@ class SurahRead extends StatelessWidget {
   final SurahModel surah;
   final int ind;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,9 +162,25 @@ class SurahRead extends StatelessWidget {
                         margin: const EdgeInsets.all(10),
                         child: Container(
                           padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: allAyahs[index - 1].sajdahNumber != null
+                                  ? Colors.grey
+                                  : Colors.transparent,
+                              width: allAyahs[index - 1].sajdahNumber != null
+                                  ? 2
+                                  : 0,
+                            ),
+                            color: allAyahs[index - 1].sajdahNumber != null
+                                ? Theme.of(context).cardColor
+                                : Colors.transparent,
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
+                              const SizedBox(
+                                height: 50,
+                              ),
                               Consumer<FontSizeProvider>(
                                 builder: (BuildContext context,
                                     FontSizeProvider value, Widget? child) {
@@ -310,37 +329,15 @@ class SurahRead extends StatelessWidget {
                       ),
 
                       // top left circularavater for surah number
-                      Positioned(
-                        top: 15,
-                        left: 15,
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            // color:
-                            //     Theme.of(context).brightness == Brightness.dark
-                            //         ? Colors.black
-                            //         : Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              allAyahs[index - 1].verseNumber.toString(),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Theme.of(context).brightness ==
-                                        Brightness.dark
-                                    ? Colors.white
-                                    : Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
+                      AyaNumberWidget(
+                        ayaNumber: allAyahs[index - 1].verseNumber.toString(),
+                        juzNumber: allAyahs[index - 1].juzNumber.toString(),
+                        rukuNumber: allAyahs[index - 1].rukuNumber.toString(),
+                        manzilNumber:
+                            allAyahs[index - 1].manzilNumber.toString(),
                       ),
+                      if (allAyahs[index - 1].sajdahNumber != null)
+                        const SujudNumberWidget()
                     ],
                   );
                 }
@@ -433,6 +430,7 @@ class SurahRead extends StatelessWidget {
     );
   }
 }
+
 
 // class ProgressOfPlayer extends StatefulWidget {
 //   const ProgressOfPlayer({

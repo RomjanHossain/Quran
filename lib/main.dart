@@ -7,6 +7,7 @@ import 'services/provider/translate/trans_provider.dart';
 import 'services/theme/theme_.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

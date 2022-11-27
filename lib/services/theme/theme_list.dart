@@ -14,6 +14,4 @@ Map<String, Color> allColors = <String, Color>{
   'Lime': Colors.lime,
   'Amber': Colors.amber,
   'Brown': Colors.brown,
-  'Grey': Colors.grey,
-  'BlueGrey': Colors.blueGrey,
 };
