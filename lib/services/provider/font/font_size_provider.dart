@@ -1,16 +1,20 @@
-import 'package:flutter/material.dart';
-import 'font_size_pref.dart';
+import "dart:async";
 
+import "package:flutter/material.dart";
+import "package:quran/services/provider/font/font_size_pref.dart";
+
+/// font size prov
 class FontSizeProvider extends ChangeNotifier {
+  /// constructor
   FontSizeProvider() {
     _fontSize = 40;
-    _arabicFontFamily = 'uthmani';
+    _arabicFontFamily = "uthmani";
     _isBn = false;
     _preferences = MyFontSizePreferences();
     _fontFamilyPreferences = MyFontFamilyPreferences();
 
-    getPreferences();
-    getPreferences2();
+    unawaited(getPreferences());
+    unawaited(getPreferences2());
   }
 
   /// arabic font size
@@ -32,13 +36,14 @@ class FontSizeProvider extends ChangeNotifier {
   String get arabicFontFamily => _arabicFontFamily;
   // is bangla name
   late bool _isBn;
-  // get is bangla name
+
+  /// get is bangla name
   bool get isBn => _isBn;
 
   // setting font size value
   set fontSize(double value) {
     _fontSize = value;
-    _preferences.setFontSize(value);
+    unawaited(_preferences.setFontSize(value));
     notifyListeners();
   }
 
@@ -51,11 +56,11 @@ class FontSizeProvider extends ChangeNotifier {
   /// setting font family value
   set arabicFontFamily(String value) {
     _arabicFontFamily = value;
-    _fontFamilyPreferences.setFontSize(value);
+    unawaited(_fontFamilyPreferences.setFontSize(value));
     notifyListeners();
   }
 
-  // getting value from preferences
+  /// getting value from preferences
   Future<void> getPreferences() async {
     _fontSize = await _preferences.getFontSize();
     notifyListeners();

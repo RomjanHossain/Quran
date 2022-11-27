@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
-import 'real_home.dart';
-import 'settings/settings_quran.dart';
+import "package:quran/pages/real_home.dart";
+import "package:quran/pages/settings/settings_quran.dart";
 
+/// The home page of the app.
 class MyHomePage extends StatefulWidget {
+  /// constractor
   const MyHomePage({
     super.key,
   });
@@ -20,37 +22,35 @@ class _MyHomePageState extends State<MyHomePage> {
     Settings(),
   ];
   static const List<Widget> _title = <Widget>[
-    Text('Al-Quran'),
-    Text('Settings'),
+    Text("Al-Quran"),
+    Text("Settings"),
   ];
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: _title.elementAt(_selectedIndex),
-      ),
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: NavigationBar(
-        // backgroundColor: Theme.of(context).primaryColor,
-        // surfaceTintColor: Theme.of(context).primaryColor,
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: (int value) => setState(
-          () {
-            _selectedIndex = value;
-          },
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: _title.elementAt(_selectedIndex),
         ),
-        // navigation transparency
-        destinations: const <NavigationDestination>[
-          NavigationDestination(
-            icon: Icon(Icons.home),
-            label: 'Home',
+        body: _widgetOptions.elementAt(_selectedIndex),
+        bottomNavigationBar: NavigationBar(
+          // backgroundColor: Theme.of(context).primaryColor,
+          // surfaceTintColor: Theme.of(context).primaryColor,
+          selectedIndex: _selectedIndex,
+          onDestinationSelected: (int value) => setState(
+            () {
+              _selectedIndex = value;
+            },
           ),
-          NavigationDestination(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-      ),
-    );
-  }
+          // navigation transparency
+          destinations: const <NavigationDestination>[
+            NavigationDestination(
+              icon: Icon(Icons.home),
+              label: "Home",
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.settings),
+              label: "Settings",
+            ),
+          ],
+        ),
+      );
 }

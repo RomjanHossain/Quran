@@ -1,14 +1,20 @@
-import 'package:flutter/material.dart';
-import 'trans_pref.dart';
+import "dart:async";
 
+import "package:flutter/material.dart";
+import "package:quran/services/provider/translate/trans_pref.dart";
+
+/// trans val prov
 class TransValProvider extends ChangeNotifier {
+  /// constructor
   TransValProvider() {
     _transList = <String>[];
     _preferences = MyTranslationPreferences();
-    getPreferences();
+    unawaited(getPreferences());
   }
   late List<String> _transList;
   late MyTranslationPreferences _preferences;
+
+  /// trans list
   List<String> get transList => _transList;
 
   // setting font size value
@@ -17,21 +23,21 @@ class TransValProvider extends ChangeNotifier {
   //   _preferences.setTransVal(value);
   //   notifyListeners();
   // }
-  // add a value to transList
-  void addTransList(String value) {
+  /// add a value to transList
+  Future<void> addTransList(String value) async {
     _transList.add(value);
-    _preferences.setTransVal(_transList);
+    await _preferences.setTransVal(_transList);
     notifyListeners();
   }
 
-  // remove a value from transList
-  void removeTransList(String value) {
+  /// remove a value from transList
+  Future<void> removeTransList(String value) async {
     _transList.remove(value);
-    _preferences.setTransVal(_transList);
+    await _preferences.setTransVal(_transList);
     notifyListeners();
   }
 
-  // getting value from preferences
+  /// getting value from preferences
   Future<void> getPreferences() async {
     _transList = await _preferences.getTransVal() ?? <String>[];
     notifyListeners();
