@@ -1,19 +1,14 @@
 import "package:shared_preferences/shared_preferences.dart";
 
-/// font size provider
 class MyFontSizePreferences {
-  /// font size key
-  // ignore: constant_identifier_names
   static const String FONT_SIZE_KEY = "font_size_key";
 
-  /// set font size
   Future<void> setFontSize(double value) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    await sharedPreferences.setDouble(FONT_SIZE_KEY, value);
+    sharedPreferences.setDouble(FONT_SIZE_KEY, value);
   }
 
-  /// get font size
   Future<double> getFontSize() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
@@ -23,21 +18,21 @@ class MyFontSizePreferences {
 
 /// font family pref
 class MyFontFamilyPreferences {
-  /// font family key
+  /// font family
   // ignore: constant_identifier_names
   static const String FONT_FAMILY = "font_family";
 
-  /// set font size
-  Future<void> setFontSize(String value) async {
+  /// set font family
+  Future<void> setFontFamily(String value) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     await sharedPreferences.setString(FONT_FAMILY, value);
   }
 
-  /// get font size
-  Future<String> getFontSize() async {
+  /// get font family
+  Future<String> getFontFamily() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    return sharedPreferences.getString(FONT_FAMILY) ?? "";
+    return sharedPreferences.getString(FONT_FAMILY) ?? "uthmani";
   }
 }

@@ -39,9 +39,9 @@ class MyRightDrawer extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: Row(
-                      children: const <Widget>[
-                        Text("Arabic Font Family"),
-                        Spacer(),
+                      children: <Widget>[
+                        const Text("Arabic Font Family"),
+                        const Spacer(),
                         FontFamilyDropDown(),
                       ],
                     ),

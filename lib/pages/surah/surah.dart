@@ -13,6 +13,7 @@ import "package:quran/pages/surah/widget/recitation_popup.dart";
 import "package:quran/pages/surah/widget/small_div.dart";
 import "package:quran/pages/surah/widget/surah_aya_list.dart";
 import "package:quran/pages/surah/widget/surah_playbutton.dart";
+import "package:quran/services/provider/font/font_size_provider.dart";
 import "package:quran/services/provider/play/play_provider.dart";
 import "package:quran/services/theme/theme_.dart";
 import "package:quran/widgets/const.dart";
@@ -67,6 +68,8 @@ class SurahRead extends StatelessWidget {
             // button to open the drawer
             IconButton(
               onPressed: () {
+                print(
+                    "Font Family -> ${Provider.of<FontSizeProvider>(context, listen: false).arabicFontFamily}");
                 _scaffoldKey.currentState!.openEndDrawer();
               },
               icon: const Icon(Icons.menu),

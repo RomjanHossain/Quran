@@ -1,5 +1,3 @@
-import "dart:async";
-
 import "package:flutter/material.dart";
 import "package:quran/services/provider/font/font_size_pref.dart";
 
@@ -13,8 +11,8 @@ class FontSizeProvider extends ChangeNotifier {
     _preferences = MyFontSizePreferences();
     _fontFamilyPreferences = MyFontFamilyPreferences();
 
-    unawaited(getPreferences());
-    unawaited(getPreferences2());
+    getPreferences();
+    getFontFamilyPref();
   }
 
   /// arabic font size
@@ -43,7 +41,7 @@ class FontSizeProvider extends ChangeNotifier {
   // setting font size value
   set fontSize(double value) {
     _fontSize = value;
-    unawaited(_preferences.setFontSize(value));
+    _preferences.setFontSize(value);
     notifyListeners();
   }
 
@@ -56,7 +54,8 @@ class FontSizeProvider extends ChangeNotifier {
   /// setting font family value
   set arabicFontFamily(String value) {
     _arabicFontFamily = value;
-    unawaited(_fontFamilyPreferences.setFontSize(value));
+    // ignore: discarded_futures
+    _fontFamilyPreferences.setFontFamily(value);
     notifyListeners();
   }
 
@@ -67,8 +66,8 @@ class FontSizeProvider extends ChangeNotifier {
   }
 
   /// getting value from preferences
-  Future<void> getPreferences2() async {
-    _arabicFontFamily = await _fontFamilyPreferences.getFontSize();
+  Future<void> getFontFamilyPref() async {
+    _arabicFontFamily = await _fontFamilyPreferences.getFontFamily();
     notifyListeners();
   }
 }

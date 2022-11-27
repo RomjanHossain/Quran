@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
-
+import "package:connectivity_plus/connectivity_plus.dart";
 import "package:quran/services/provider/play/play_provider.dart";
 
 /// center play button
@@ -46,20 +46,44 @@ class _CenterButtonWidgetState extends State<CenterButtonWidget> {
           // print('url is $url');
           return FloatingActionButton.large(
             onPressed: () async {
-              if (_isPressed) {
-                // player.pause();
-                await playProvider.player.pause();
-                setState(() {
-                  _isPressed = false;
-                });
+// check if the device is connected to the internet
+              final ConnectivityResult result =
+                  await Connectivity().checkConnectivity();
+              if (result == ConnectivityResult.none) {
+                // show a dialog to the user
+                // ignore: use_build_context_synchronously
+                await showDialog(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text("No Internet Connection"),
+                    content: const Text(
+                        "Please check your internet connection and try again"),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("OK"),
+                      ),
+                    ],
+                  ),
+                );
               } else {
-                // print('play btn clicked');
-                await playProvider.player.play();
-                // print(playProvider.player.playing);
-                // player.play();
-                setState(() {
-                  _isPressed = true;
-                });
+                if (_isPressed) {
+                  // player.pause();
+                  await playProvider.player.pause();
+                  setState(() {
+                    _isPressed = false;
+                  });
+                } else {
+                  // print('play btn clicked');
+                  await playProvider.player.play();
+                  // print(playProvider.player.playing);
+                  // player.play();
+                  setState(() {
+                    _isPressed = true;
+                  });
+                }
               }
             },
 

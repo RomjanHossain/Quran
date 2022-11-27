@@ -94,20 +94,28 @@ class AyaListView extends StatelessWidget {
                                             _getTrans(131).first.text!,
                                           )
                                         : "",
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
                                       // color: Colors.black,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
                                       letterSpacing: 0.9,
                                     ),
                                   ),
                                   TextSpan(
                                     text:
                                         "\n\n- ${_getTrans(131).first.resourceName}",
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 16,
                                       fontStyle: FontStyle.italic,
                                       letterSpacing: 0.5,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
                                       // fontWeight: FontWeight.bold,
                                     ),
                                   ),
