@@ -20,37 +20,37 @@ class MaterialSurahCard extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         Provider.of<PlayProvider>(context, listen: false).setPlayIndex(index);
-        Navigator.push(context, MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) {
-            return SurahRead(
-              surah: surah,
-              ind: index,
-            );
-          },
-        ));
-        // await Navigator.of(context).push<dynamic>(
-        //   PageRouteBuilder<dynamic>(
-        //     pageBuilder: (
-        //       BuildContext context,
-        //       Animation<double> animation,
-        //       _,
-        //     ) =>
-        //         SurahRead(
+        // Navigator.push(context, MaterialPageRoute<dynamic>(
+        //   builder: (BuildContext context) {
+        //     return SurahRead(
         //       surah: surah,
         //       ind: index,
-        //     ),
-        //     transitionsBuilder: (
-        //       BuildContext context,
-        //       Animation<double> animation,
-        //       _,
-        //       Widget child,
-        //     ) =>
-        //         FadeTransition(
-        //       opacity: animation,
-        //       child: child,
-        //     ),
-        //   ),
-        // );
+        //     );
+        //   },
+        // ));
+        await Navigator.of(context).push<dynamic>(
+          PageRouteBuilder<dynamic>(
+            pageBuilder: (
+              BuildContext context,
+              Animation<double> animation,
+              _,
+            ) =>
+                SurahRead(
+              surah: surah,
+              ind: index,
+            ),
+            transitionsBuilder: (
+              BuildContext context,
+              Animation<double> animation,
+              _,
+              Widget child,
+            ) =>
+                FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+          ),
+        );
       },
       child: Card(
         // color: Theme.of(context).colorScheme.surfaceVariant,

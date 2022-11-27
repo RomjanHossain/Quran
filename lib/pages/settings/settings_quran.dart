@@ -114,9 +114,35 @@ class Settings extends StatelessWidget {
 
         const Divider(),
         // privacy policy
-        const ListTile(
+        ListTile(
           title: Text('Privacy Policy'),
           trailing: Icon(Icons.arrow_forward_ios),
+          onTap: () {
+            // open a bottom sheet
+            showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Privacy Policy',
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                      ),
+                      const Divider(),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "This app collects no private data, period. Your data will not be used in any way, because we won't have it.",
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                      )
+                    ],
+                  );
+                });
+          },
         ),
         const Divider(),
 

@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:provider/provider.dart';
-import 'package:quran/pages/surah/widget/ayanumber.dart';
+import 'package:quran/pages/surah/widget/surah_aya_list.dart';
 
 import '../../model/from_web/real_model.dart';
 import '../../model/surah_model/surah_model.dart';
@@ -14,6 +14,7 @@ import '../../services/provider/translate/trans_provider.dart';
 import '../../services/theme/theme_.dart';
 import '../../widgets/const.dart';
 import '../home/widget/right_drawer.dart';
+import 'widget/ayanumber.dart';
 import 'widget/is_sujud.dart';
 import 'widget/recitation_popup.dart';
 import 'widget/small_div.dart';
@@ -37,10 +38,7 @@ class SurahRead extends StatelessWidget {
       extendBody: true,
       endDrawer: const MyRightDrawer(),
       appBar: AppBar(
-        title: Hero(
-          tag: surah.nameEn,
-          child: Text(surah.nameEn),
-        ),
+        title: Text(surah.nameEn),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -71,282 +69,86 @@ class SurahRead extends StatelessWidget {
       body: FutureBuilder<String>(
         future: rootBundle.loadString('assets/surahs/quran_$ind.json'),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-          if (snapshot.hasData) {
-            final List<RealSurahModel> allAyahs =
-                (jsonDecode(snapshot.data!) as List<dynamic>)
-                    .map((dynamic e) =>
-                        RealSurahModel.fromJson(e as Map<String, dynamic>))
-                    .toList();
-            return ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: allAyahs.length + 1,
-              itemBuilder: (BuildContext context, int index) {
-                // print('lets print the texts -> ');
-                // print(translationLang.elementAt(index).text);
-                if (index == 0) {
-                  return Card(
-                    // semanticContainer: true,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    // padding: const EdgeInsets.all(20),
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 20,
-                    ),
+          return ListView(
+            children: <Widget>[
+              Card(
+                // semanticContainer: true,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                // padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 20,
+                ),
 
-                    // height: 100,
-                    // color: Colors.red,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        // set an image with opacity
-                        image: DecorationImage(
-                          image: const NetworkImage(
-                              'https://images.unsplash.com/photo-1596125160970-6f02eeba00d3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cXVyYW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60'),
-                          fit: BoxFit.cover,
-                          colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.5), BlendMode.dstATop),
+                // height: 100,
+                // color: Colors.red,
+                child: Container(
+                  decoration: BoxDecoration(
+                    // set an image with opacity
+                    image: DecorationImage(
+                      image: const NetworkImage(
+                          'https://images.unsplash.com/photo-1596125160970-6f02eeba00d3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cXVyYW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60'),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.5), BlendMode.dstATop),
+                    ),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 20,
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      // name
+                      Hero(
+                        tag: surah.nameEn,
+                        child: Text(
+                          surah.nameEn,
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 20,
+                      // name meaning
+                      Text(
+                        surah.nameMeaningEn,
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
-                      child: Column(
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const SmallDivider(),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      // row [type of surah, number of ayahs]
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          // name
                           Text(
-                            surah.nameEn,
-                            style: Theme.of(context).textTheme.headlineLarge,
+                            '${getType(surah.revelationType.replaceAll(' ', ''))} -  ',
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
-                          // name meaning
                           Text(
-                            surah.nameMeaningEn,
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const SmallDivider(),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          // row [type of surah, number of ayahs]
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                '${getType(surah.revelationType.replaceAll(' ', ''))} -  ',
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              Text(
-                                surah.ayahs,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                            ],
+                            surah.ayahs,
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ],
                       ),
-                    ),
-                  );
-                } else {
-                  // ignore: no_leading_underscores_for_local_identifiers
-                  Iterable<Translations> _getTrans(int id) {
-                    return allAyahs[index - 1].translations!.where(
-                        (Translations element) => element.resourceId == id);
-                  }
-
-                  return Stack(
-                    children: <Widget>[
-                      Card(
-                        margin: const EdgeInsets.all(10),
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: allAyahs[index - 1].sajdahNumber != null
-                                  ? Colors.grey
-                                  : Colors.transparent,
-                              width: allAyahs[index - 1].sajdahNumber != null
-                                  ? 2
-                                  : 0,
-                            ),
-                            color: allAyahs[index - 1].sajdahNumber != null
-                                ? Theme.of(context).cardColor
-                                : Colors.transparent,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              const SizedBox(
-                                height: 50,
-                              ),
-                              Consumer<FontSizeProvider>(
-                                builder: (BuildContext context,
-                                    FontSizeProvider value, Widget? child) {
-                                  return Text(
-                                    value.arabicFontFamily == 'uthmani'
-                                        ? allAyahs[index - 1]
-                                            .textUthmani
-                                            .toString()
-                                        : allAyahs[index - 1]
-                                            .textImlaeiSimple
-                                            .toString(),
-                                    style: TextStyle(
-                                      fontSize: value.fontSize,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.end,
-                                  );
-                                },
-                              ),
-                              Consumer<TransValProvider>(
-                                builder: (BuildContext context,
-                                    TransValProvider value, Widget? child) {
-                                  if (value.transList.isEmpty) {
-                                    return RichText(
-                                      // textAlign: TextAlign.end,
-                                      text: TextSpan(
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            text: _getTrans(131).first.text !=
-                                                    null
-                                                ? removeAllHtmlTags(
-                                                    _getTrans(131).first.text!)
-                                                : '',
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400,
-                                              // color: Colors.black,
-                                              letterSpacing: 0.9,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text:
-                                                '\n\n- ${_getTrans(131).first.resourceName}',
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontStyle: FontStyle.italic,
-                                              letterSpacing: 0.5,
-                                              // fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                  //! return every widget form value.transList
-                                  return Column(
-                                    children: <Widget>[
-                                      for (int i = 0;
-                                          i < value.transList.length;
-                                          i++)
-                                        RichText(
-                                          text: TextSpan(
-                                            style: TextStyle(
-                                              // change font color based on the theme
-                                              color: Theme.of(context)
-                                                          .brightness ==
-                                                      Brightness.dark
-                                                  ? Colors.white
-                                                  : Colors.black,
-                                            ),
-                                            children: <TextSpan>[
-                                              const TextSpan(text: '\n'),
-                                              TextSpan(
-                                                text: _getTrans(int.parse(value
-                                                                .transList[i]))
-                                                            .first
-                                                            .text !=
-                                                        null
-                                                    ? removeAllHtmlTags(
-                                                        _getTrans(int.parse(
-                                                                value.transList[
-                                                                    i]))
-                                                            .first
-                                                            .text!)
-                                                    : '',
-                                                style: const TextStyle(
-                                                  fontSize: 20,
-                                                  // color: Colors.red,
-                                                ),
-                                              ),
-                                              // a textspan for next line
-                                              TextSpan(
-                                                text:
-                                                    '\n\n\t- ${_getTrans(int.parse(value.transList[i])).first.resourceName}\n\n',
-                                                style: const TextStyle(
-                                                  fontSize: 15,
-                                                  // color: Colors.black,
-                                                  fontStyle: FontStyle.italic,
-                                                  letterSpacing: 0.5,
-                                                  // fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                    ],
-                                  );
-                                  // return RichText(
-                                  //     text: TextSpan(children: <TextSpan>[
-                                  //   TextSpan(
-                                  //     text: translationLang.first.text != null
-                                  //         ? removeAllHtmlTags(
-                                  //             translationLang.first.text!)
-                                  //         : '',
-                                  //     style: const TextStyle(
-                                  //       fontSize: 20, color: Colors.black,
-                                  //       // fontWeight: FontWeight.bold,
-                                  //       fontWeight: FontWeight.w400,
-                                  //       // color: Colors.black,
-                                  //       letterSpacing: 0.9,
-                                  //     ),
-                                  //   ),
-                                  //   TextSpan(
-                                  //     text: '\n\n\t- ${translation.resourceName}',
-                                  //     style: const TextStyle(
-                                  //       fontSize: 16,
-                                  //       color: Colors.black,
-                                  //       fontStyle: FontStyle.italic,
-                                  //       letterSpacing: 0.5,
-                                  //       // fontWeight: FontWeight.bold,
-                                  //     ),
-                                  //   ),
-                                  // ]));
-                                },
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const SmallDivider(),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      // top left circularavater for surah number
-                      AyaNumberWidget(
-                        ayaNumber: allAyahs[index - 1].verseNumber.toString(),
-                        juzNumber: allAyahs[index - 1].juzNumber.toString(),
-                        rukuNumber: allAyahs[index - 1].rukuNumber.toString(),
-                        manzilNumber:
-                            allAyahs[index - 1].manzilNumber.toString(),
-                      ),
-                      if (allAyahs[index - 1].sajdahNumber != null)
-                        const SujudNumberWidget()
                     ],
-                  );
-                }
-                // futurebuilder which loads a local json file
-              },
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
+                  ),
+                ),
+              ),
+              if (snapshot.hasData)
+                AyaListView(
+                  allAyahs: (jsonDecode(snapshot.data!) as List<dynamic>)
+                      .map((dynamic e) =>
+                          RealSurahModel.fromJson(e as Map<String, dynamic>))
+                      .toList(),
+                )
+              else
+                const Center(
+                  child: CircularProgressIndicator(),
+                ),
+            ],
           );
         },
       ),
@@ -430,39 +232,3 @@ class SurahRead extends StatelessWidget {
     );
   }
 }
-
-
-// class ProgressOfPlayer extends StatefulWidget {
-//   const ProgressOfPlayer({
-//     super.key,
-//   });
-
-//   @override
-//   State<ProgressOfPlayer> createState() => _ProgressOfPlayerState();
-// }
-
-// class _ProgressOfPlayerState extends State<ProgressOfPlayer> {
-//   @override
-//   void dispose() {
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Consumer<PlayProvider>(
-//         builder: (BuildContext context, PlayProvider playprov, Widget? child) {
-//       // the the playprov.player.position changes then call the setState
-
-//       return StreamBuilder<Duration>(
-//           stream: playprov.player.positionStream,
-//           builder: (BuildContext context, AsyncSnapshot<Duration> snapshot) {
-//             print(snapshot);
-
-//             return ProgressBar(
-//               progress: snapshot.data ?? Duration(milliseconds: 200),
-//               total: playprov.player.duration ?? const Duration(seconds: 10),
-//             );
-//           });
-//     });
-//   }
-// }

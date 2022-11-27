@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
       child: Consumer<ModelTheme>(builder:
           (BuildContext context, ModelTheme themeNotifier, Widget? child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Quran Majeed',
           theme: themeNotifier.isDark
               ? ThemeData(
