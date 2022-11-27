@@ -93,7 +93,7 @@ class SurahRead extends StatelessWidget {
                   decoration: BoxDecoration(
                     // set an image with opacity
                     image: DecorationImage(
-                      image: const AssetImage("assets/images/quran.jpg"),
+                      image: const AssetImage("assets/images/quran2.jpg"),
                       fit: BoxFit.cover,
                       colorFilter: ColorFilter.mode(
                         Colors.black.withOpacity(0.5),
